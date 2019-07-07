@@ -28,106 +28,306 @@
 \providecommand{\ov}[1]{\overline{#1}}
 
 
-\institute[ISU]{Iowa State University}
-\date{\today}
+% title slide
+\institute[ISU]{Department of Statistics\\Iowa State University}
+\date{July 16, 2019}
 
-\title[Fully Bayes RNAseq analysis]{Fully Bayesian analysis of RNAseq data for gene expression heterosis detection}
-\author{Dr. Jarad Niemi}
+\title[Gaussian process emulator]{Emulator for Water Erosion Prediction Project computer model using Gaussian Processes with functional inputs}
+\author{Gulzina Kuttubekova}
 
 \begin{document}
-
-
 
 \begin{frame}
 \maketitle
 
 {\small
-Dr. Dan Nettleton (ISU) and  Dr. Will Landau (Eli Lilly)
+Major Professor: Dr. Jarad Niemi
 }
 
 \vspace{0.2in}
-
-{\tiny
-This research was supported by National Institute of General Medical Sciences (NIGMS) of the National Institutes of Health and the joint National Science Foundation / NIGMS Mathematical Biology Program under award number R01GM109458. The content is solely the responsibility of the authors and does not necessarily represent the official views of the National Institutes of Health or the National Science Foundation.
-}
-
 \end{frame}
 
 
-
-
-
-
-\section{RNAseq data}
-
-
-
+% outline slide
 \begin{frame}
-\frametitle{RNAseq data}
+\frametitle{Outline}
 \setkeys{Gin}{width=0.7\textwidth}
 
-\begin{center}
-\includegraphics{data}
-{\tiny (Will Landau)}
-\end{center}
+{\small
+\begin{itemize}
+\item Introduction
+\item Data
+\item Methods
+\item Analysis
+\item Discussion
+\item Q\&A
+\end{itemize}
+}
+
+\end{frame}
+
+
+
+
+
+% chapter: Introduction
+\section{Introduction}
+
+% slide 1
+\begin{frame}
+\frametitle{Computer models and Emulators}
+\setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Low (high) parent heterosis: expression in hybrid is lower (higher) than both parents
+Write the concepts of computer models and emulators
+}
+\end{frame}
+
+
+% slide 2
+\begin{frame}
+\frametitle{Gaussian Processes with functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Concepts of GPs with functional inputs
 }
 \end{frame}
 
 
 
 
-\subsection{Hierarchical overdispersed count regression model}
-\begin{frame}
-\frametitle{Overdispersed count regression model}
 
-Let 
-\begin{itemize}
-\item $g$ ($g=1,\ldots,G$) identify the gene, 
-\item $n$ ($n=1,\ldots,N$) identify the sample,
-\item $y$ be the $G\times N$ matrix of RNAseq counts and
-\item $X$ be the $N\times L$ model matrix that connects the $N$ samples to the varieties, blocking factors, etc.
-\end{itemize}
-\pause
-We assume 
-\[ 
-y_{gn} \ind \text{Po} \left (e^{h_n + x_n' \beta_{g} + \varepsilon_{gn}} \right )
-\]
-\pause
-where 
-\begin{itemize}
-\item $h_n$ are \emph{normalization factors} (offsets),
-\item $x_n$ is the $n^{th}$ row of $X$,
-\item $\beta_g$ is a vector of length $L$ that account for effects on gene expression of variables of interest, and 
-\item $\varepsilon_{gn} \ind N(0,\gamma_g)$ allow for gene-specific overdispersion.
-\end{itemize}
+% chapter: Data
+\section{Data}
+
+% slide 1
+\begin{frame}
+\frametitle{WEPP computer model}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+What is WEPP?
+}
 \end{frame}
 
 
+% slide 2
+\subsection{WEPP simulation analysis}
 \begin{frame}
-\frametitle{Hierarchical model}
+\frametitle{WEPP simulation analysis}
+\setkeys{Gin}{width=0.7\textwidth}
 
-Recall 
-\[ 
-y_{gn} \ind \text{Po} \left (e^{h_n + \varepsilon_{gn} + x_n' \beta_{g}} \right )
-\qquad\mbox{and}\qquad
-\varepsilon_{gn} \ind N(0,\gamma_g).
-\]
+{\small
+How to run WEPP? Outputs?
+}
+\end{frame}
 
-\vspace{0.1in}
 
-We construct a hierarchical model for both $\beta_g$ and $\gamma_g$ to borrow information across genes. \pause
-Specifically, we assume
-\[ 
-\beta_{g\ell} \ind N(\theta_\ell, \sigma_\ell^2)
-\]
-for $\ell=1,\ldots,L$ \pause and
-\[ 
-1/\gamma_g\ind \text{Ga} \left (\nu/2,\nu\tau/2 \right)
-\]
-such that $E[1/\gamma_g] = 1/\tau$ and $CoV[1/\gamma_g] = \sqrt{2/\nu}$. 
+% slide 3
+\begin{frame}
+\frametitle{Inputs: Climate and Management}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Discuss with pictures
+}
+\end{frame}
+
+
+% slide 4
+\begin{frame}
+\frametitle{Inputs: Slope and Soil}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Discuss with pictures
+}
+\end{frame}
+
+
+
+
+
+% chapter: Methods
+\section{Methods}
+
+% slide 1
+\subsection{Gaussian Processes}
+\begin{frame}
+\frametitle{Gaussian process model}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+GP's explained: definition, covariance functions, bayesian, priors
+}
+\end{frame}
+
+
+% slide 2
+\begin{frame}
+\frametitle{Properties of Gaussian process}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+regulzarization? penalty? marginalization?
+}
+\end{frame}
+
+
+% slide 3
+\begin{frame}
+\frametitle{Gaussian process with functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+trigonometric basis? 
+}
+\end{frame}
+
+
+% slide 4
+\begin{frame}
+\frametitle{Gaussian process emulator}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+write three final approaches 
+}
+\end{frame}
+
+
+% chapter: Analysis
+\section{Analysis}
+
+% slide 1
+\subsection{Simulation study}
+\begin{frame}
+\frametitle{Simulating data}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+how did you simulate data?
+}
+\end{frame}
+
+
+% slide 2
+\begin{frame}
+\frametitle{Analysis on simulated data}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Analysis? which model?
+}
+\end{frame}
+
+
+% slide 3
+\subsection{Analysis on the WEPP generated data}
+\begin{frame}
+\frametitle{Gaussian process model with scalar inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+description and pictures
+}
+\end{frame}
+
+
+% slide 4
+\begin{frame}
+\frametitle{Gaussian process model with scalar and functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+description and pictures 
+}
+\end{frame}
+
+
+% slide 5
+\begin{frame}
+\frametitle{Gaussian process model with functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+description and pictures
+}
+\end{frame}
+
+
+
+
+
+% chapter: Discussion
+\section{Discussion}
+
+% slide 1
+\subsection{Model performance}
+\begin{frame}
+\frametitle{Simulation study}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+how? did we expect?
+}
+\end{frame}
+
+
+% slide 2
+\begin{frame}
+\frametitle{Gaussian process model with scalar inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Analysis? which model?
+}
+\end{frame}
+
+
+% slide 3
+\begin{frame}
+\frametitle{Gaussian process model with scalar and functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Analysis? which model?
+}
+\end{frame}
+
+
+% slide 4
+\begin{frame}
+\frametitle{Gaussian process model with functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+Analysis? which model?
+}
+\end{frame}
+
+
+% slide 5
+\subsection{Next steps}
+\begin{frame}
+\frametitle{Sophisticating the GP emulator}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+how? did we expect?
+}
+\end{frame}
+
+
+% slide 6
+\begin{frame}
+\frametitle{GP emulator for APSIM}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+what to include? improve? consider?
+}
 \end{frame}
 
 
@@ -135,29 +335,41 @@ such that $E[1/\gamma_g] = 1/\tau$ and $CoV[1/\gamma_g] = \sqrt{2/\nu}$.
 
 
 
+% thanks slide
 \begin{frame}
-\frametitle{Heterosis hypotheses}
+\frametitle{Acknowledgements}
+\setkeys{Gin}{width=0.7\textwidth}
 
+{\small
+\begin{itemize}
+\item Special thanks to my major professor Dr. Jarad Niemi, to the committee members: Dr. Somak Dutta and Dr. Max Morris and my colleagues at C-CHANGE research group
+\item This slide, CC thesis, Data and R codes are available at \url{https://github.com/kgulzina/CC-Research}
+\end{itemize}
+}
+
+\vspace{0.1in} \pause
+
+% should I include references????
+Manuscripts:
 {\footnotesize
-\begin{tabular}{l|l|l}
-Heterosis & With log-scale group means  & With $\beta_{g\ell}$ parameters \\ \hline
-high-parent BM & $\phantom{1\mu_{g,\text{BM}} + } \mu_{g,\text{BM}} > \phantom{2} \max \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $\phantom{-}2\beta_{g2} + \beta_{g4}, \phantom{-}2\beta_{g3} + \beta_{g4} > 0$ \\
-low-parent BM & $\phantom{1\mu_{g,\text{BM}} + }\mu_{g,\text{BM}} < \phantom{2}  \min\, \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $-2\beta_{g2} - \beta_{g4}, -2\beta_{g3} - \beta_{g4} > 0$ \\
-high-parent MB & $\phantom{1\mu_{g,\text{BM}} + }\mu_{g,\text{MB}} > \phantom{2}  \max \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $\phantom{-}2\beta_{g2} - \beta_{g4}, \phantom{-}2\beta_{g3} - \beta_{g4} > 0$ \\
-low-parent MB & $\phantom{1\mu_{g,\text{BM}} + }  \mu_{g,\text{MB}} < \phantom{2} \min\, \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $-2\beta_{g2} + \beta_{g4}, \phantom{-}2\beta_{g3} + \beta_{g4} > 0$ \\
-high-parent mean & $\mu_{g,\text{BM}} + \mu_{g,\text{MB}} > 2 \max \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $\phantom{-}\beta_{g2}, \phantom{-}\beta_{g3} > 0$ \\
-low-parent mean & $\mu_{g,\text{BM}} + \mu_{g,\text{MB}} < 2 \min\, \left (\mu_{g,\text{B}}, \mu_{g,\text{M}} \right )$ & $-\beta_{g2}, -\beta_{g3} > 0$ 
-\end{tabular}
+\begin{itemize}
+\item Jarad Niemi, Eric Mittman, Will Landau, and Dan Nettleton. (2015) ``Empirical Bayes analysis of RNA-seq data for detection of gene expression heterosis.’’ Journal of Agricultural, Biological, and Environmental Statistcs, 20(4): 614-628
+\item Will Landau and Jarad Niemi. ``A fully Bayesian strategy for high-dimensional hierarchical modeling using massively parallel computing.'' \url{https://arxiv.org/abs/1606.06659}
+\item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
+\end{itemize}
 }
 
-\vspace{0.2in} \pause
+\vspace{0.1in} \pause
 
-All hypothesis regions are intersections of linear combination events\pause, but we can also accommodate unions of contrast events via 
-\[ 
-P(A\cup B) = P(A) + P(B) - P(A \cap B).
-\]
+\begin{center}
+{\Huge
+Any Questions?
+}
+\end{center}
 
 \end{frame}
+
+
 
 
 
@@ -322,47 +534,6 @@ Compare posterior distribution (gray area) to normal-based approximation (black 
 \begin{center}
 \includegraphics{fig-volcano}
 \end{center}
-\end{frame}
-
-
-
-
-
-\begin{frame}
-\frametitle{Summary}
-
-\begin{itemize}
-\item Introduced a hierarchical overdispersed count regression model and
-\item a GPU-implementation of a fully Bayesian analysis.
-\end{itemize}
-
-\vspace{0.1in} \pause
-
-This slides are available 
-\begin{itemize}
-\item \url{https://github.com/jarad/JSM2018}
-\item \url{http://www.jarad.me/research/presentations.html}
-\end{itemize}
-
-\vspace{0.1in} \pause
-
-Manuscripts:
-{\footnotesize
-\begin{itemize}
-\item Jarad Niemi, Eric Mittman, Will Landau, and Dan Nettleton. (2015) ``Empirical Bayes analysis of RNA-seq data for detection of gene expression heterosis.’’ Journal of Agricultural, Biological, and Environmental Statistcs, 20(4): 614-628
-\item Will Landau and Jarad Niemi. ``A fully Bayesian strategy for high-dimensional hierarchical modeling using massively parallel computing.'' \url{https://arxiv.org/abs/1606.06659}
-\item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
-\end{itemize}
-}
-
-\vspace{0.1in} \pause
-
-\begin{center}
-{\Huge
-Thank you!
-}
-\end{center}
-
 \end{frame}
 
 
