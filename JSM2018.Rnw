@@ -7,6 +7,8 @@
 
 \setlength{\unitlength}{\textwidth}  % measure in textwidths
 \usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage{subfig}
 
 % to avoid counting all pages
 \newcommand{\backupbegin}{
@@ -70,29 +72,50 @@ Major Professor: Dr. Jarad Niemi
 
 
 
+
 % chapter: Introduction
 \section{Introduction}
 
 % slide 1
 \begin{frame}
-\frametitle{Computer models and Emulators}
+\frametitle{Concepts of computer models and emulators}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Write the concepts of computer models and emulators
+Computer models
+\begin{itemize}
+\item Implementation of complex mathematical models used to study many areas of scientific research (Sacks et al., 1989).
+\item Process of running large computer codes with various inputs to learn the output of dynamic real systems.
+\item They produce outputs that are functions of time as well as they require time-indexed inputs (Morris, 2014).
+\end{itemize}
+
+\vspace{0.1in} \pause
+
+Emulators
+\begin{itemize}
+\item ``Meta-model" or ``surrogate" built with less number of inputs
+\item Mimics the computer model and predicts outputs for the new input values
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 2
 \begin{frame}
-\frametitle{Gaussian Processes with functional inputs}
+\frametitle{Gaussian Processes (GPs)}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Concepts of GPs with functional inputs
+\begin{itemize}
+\item Collection of time- or space- dependent random variables, where any finite collection of such random variables gives the multivariate normal distribution
+\item GPs provide an alternative approach to regression and classifcation problems. Derives distribution over all functions $f(x)$, which are consistent wih observed data
+\item GPs employ Bayesian approach as we set prior distribution for functions,  update it with the observed data and get the posterior distribution over functions
+\item Stationarity, smoothness and other aspects of GPs are controlled by tuning parameters in the covariance function $k(x,x')$
+\item GPs by their structure are one of the suitable models for time- or space- varying functional input computer models
+\end{itemize}
 }
 \end{frame}
+
 
 
 
@@ -107,8 +130,17 @@ Concepts of GPs with functional inputs
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-What is WEPP?
+\begin{itemize}
+\item Soil erosion and runoff prediction technology used by the United States Department of Agriculture (USDA)
+\item Process-orinted, computer implemented, continuous simulation program
+\item Requires various input files $\{climate, management, soil, slope\}$
+\end{itemize}
 }
+
+\begin{center}
+\includegraphics[scale = 0.7]{wepp.jpg}
+\end{center}
+%{\fontsize{2.5}{4}\selectfont (\url{https://scs.senecac.on.ca/~gpu610/pages/images/parallel_reduction.png})}
 \end{frame}
 
 
@@ -118,32 +150,112 @@ What is WEPP?
 \frametitle{WEPP simulation analysis}
 \setkeys{Gin}{width=0.7\textwidth}
 
+\begin{center}
+\includegraphics[scale = 0.1, width = 60mm]{strips.png}
+\end{center}
+
 {\small
-How to run WEPP? Outputs?
+Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watersheds at Neal Smith National Wildlife Refuge (NSNWR)
 }
+
 \end{frame}
 
 
 % slide 3
 \begin{frame}
-\frametitle{Inputs: Climate and Management}
+\frametitle{Input files: Climate and Management}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Discuss with pictures
+\begin{itemize}
+\item Both files are constant for all 36 WEPP simulations
+\item Climate file is retrieved from neareast station close to NSNWR
+\item Precipitation is chosen amount among other daily climate records 
+\begin{center}
+\includegraphics{prcp.pdf}
+\end{center}
+\item ``corn-soybean-no-till'' management file along with the WEPP's default parameter values
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 4
 \begin{frame}
-\frametitle{Inputs: Slope and Soil}
+\frametitle{Input files: Slope and Soil}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Discuss with pictures
+\begin{itemize}
+\item Both files are individual for each specific hillslope
+\item Soil information is retrieved from SSURGO database by USDA-NRCS
+\item Soil texture is allocated in 12 watersheds by \textit{(long, lat)} coordinates provided in data files
+\begin{table}[h!]
+  \begin{center}
+    \label{tab:table1}
+    \begin{tabular}{||c c c c c c||} 
+    \hline
+    Depth(mm) & Sand(\%) & Clay(\%) & Organic(\%) & CEC(meq/100g) & Rock(\%) \\ [0.5ex] 
+    \hline\hline
+    254.00 & 6.40 & 24.50 & 2.50 & 24.00 & 0.00\\ 
+    \hline
+    1143.00 & 22.00 & 39.00 & 0.83 & 31.20 & 0.00\\
+    \hline
+    1524.00 & 25.70 & 28.00 & 0.28 & 22.40 & 0.00\\ [1ex] 
+    \hline
+    \end{tabular}
+    \caption{Detailed LADOGA(SIL) soil texture information measured to a maximum depth of 1.8 meters.}
+  \end{center}
+\end{table}
+\end{itemize}
 }
 \end{frame}
+
+
+% slide 5
+\begin{frame}
+\frametitle{Input files: Slope and Soil}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+\begin{itemize}
+\item Slope is measured for every 5 meters of hillslope length. Lengths range from 5.98 to 125.60 meters
+\item ``Face''/``gulley'': Slope profile is depicted from ``face'' transect
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Slope profile of the hillslope 1 in Basswood1 watershed.]{\includegraphics[width=0.4\textwidth]{bsw_slope.pdf}\label{fig:f1}}
+  \hfill
+  \subfloat[Slope profile of hillslope 3 in Orbweaver2 watershed.]{\includegraphics[width=0.4\textwidth]{orb_slope.pdf}\label{fig:f2}}
+\end{figure}
+\end{itemize}
+}
+\end{frame}
+
+
+% slide 6
+\begin{frame}
+\frametitle{Reading information on soil loss from *.env output file}
+\setkeys{Gin}{width=0.7\textwidth}
+
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Anuual soil loss distribution for two random hillslopes]{\includegraphics{soil_loss.pdf}\label{fig:f1}}
+\end{figure}
+
+\end{frame}
+
+
+% slide 7
+\begin{frame}
+\frametitle{Reading information on soil loss from *.env output file}
+\setkeys{Gin}{width=0.7\textwidth}
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Annual soil loss distribution for all 36 hillslopes in 12 years]{\includegraphics{soil_loss_all.pdf}\label{fig:f2}}
+\end{figure}
+
+\end{frame}
+
 
 
 
@@ -159,6 +271,9 @@ Discuss with pictures
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
+\begin{itemize}
+\item 
+\end{itemize}
 GP's explained: definition, covariance functions, bayesian, priors
 }
 \end{frame}
@@ -325,9 +440,12 @@ how? did we expect?
 \frametitle{GP emulator for APSIM}
 \setkeys{Gin}{width=0.7\textwidth}
 
-{\small
-what to include? improve? consider?
-}
+\begin{center}
+\includegraphics[width = 73mm, height = 71mm]{apsim}
+\end{center}
+% include citation
+{\fontsize{2.5}{4}\selectfont (\url{https://ars.els-cdn.com/content/image/1-s2.0-S0378429018321658-gr9_lrg.jpg})}
+
 \end{frame}
 
 
@@ -335,7 +453,7 @@ what to include? improve? consider?
 
 
 
-% thanks slide
+% thanks slide, Q&A
 \begin{frame}
 \frametitle{Acknowledgements}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -344,18 +462,6 @@ what to include? improve? consider?
 \begin{itemize}
 \item Special thanks to my major professor Dr. Jarad Niemi, to the committee members: Dr. Somak Dutta and Dr. Max Morris and my colleagues at C-CHANGE research group
 \item This slide, CC thesis, Data and R codes are available at \url{https://github.com/kgulzina/CC-Research}
-\end{itemize}
-}
-
-\vspace{0.1in} \pause
-
-% should I include references????
-Manuscripts:
-{\footnotesize
-\begin{itemize}
-\item Jarad Niemi, Eric Mittman, Will Landau, and Dan Nettleton. (2015) ``Empirical Bayes analysis of RNA-seq data for detection of gene expression heterosis.’’ Journal of Agricultural, Biological, and Environmental Statistcs, 20(4): 614-628
-\item Will Landau and Jarad Niemi. ``A fully Bayesian strategy for high-dimensional hierarchical modeling using massively parallel computing.'' \url{https://arxiv.org/abs/1606.06659}
-\item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
 \end{itemize}
 }
 
@@ -372,6 +478,19 @@ Any Questions?
 
 
 
+
+% references
+\begin{frame}
+\frametitle{References}
+\setkeys{Gin}{width=0.7\textwidth}
+{\footnotesize
+\begin{itemize}
+\item Jarad Niemi, Eric Mittman, Will Landau, and Dan Nettleton. (2015) ``Empirical Bayes analysis of RNA-seq data for detection of gene expression heterosis.’’ Journal of Agricultural, Biological, and Environmental Statistcs, 20(4): 614-628
+\item Will Landau and Jarad Niemi. ``A fully Bayesian strategy for high-dimensional hierarchical modeling using massively parallel computing.'' \url{https://arxiv.org/abs/1606.06659}
+\item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
+\end{itemize}
+}
+\end{frame}
 
 
 
@@ -472,68 +591,6 @@ configs    = Configs(burnin = 10, iterations = 10, thin = 1)
 chain      = Chain(paschold, configs) 
 chain_list = fbseq(chain, backend = "CUDA")
 @
-\end{frame}
-
-
-
-
-
-
-\section{Real data analysis}
-\begin{frame}
-\setkeys{Gin}{width=0.7\textwidth}
-\frametitle{Analysis of Paschold et. al. (2012) data}
-
-\begin{center}
-\includegraphics{heterosis}
-\end{center}
-
-\begin{itemize}
-\item $N=16$ with 4 replicates/variety on 2 plates
-	\begin{itemize}
-	\item varieties: B73, Mo17, B73$\times$Mo17, Mo17$\times$ B73
-	\end{itemize}
-\item $G=39\,656$
-% \item 21\% of genes have mean counts less than 1
-% \item 39\% have mean counts less than 10
-% \item count: median 37, mean $260$, and max $38\,010$
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Hyperparameter posterior}
-\setkeys{Gin}{width=0.8\textwidth}
-\begin{center}
-\includegraphics{fig-hyperhist}
-\end{center}
-\end{frame}
-
-
-\begin{frame}
-\setkeys{Gin}{width=0.6\textwidth}
-\frametitle{Gene-specific parameter posteriors}
-
-Compare posterior distribution (gray area) to normal-based approximation (black dashed line).
-
-\vspace{-0.15in}
-
-\begin{center}
-\includegraphics{fig-betahist}
-\end{center}
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Smokestack plot}
-\setkeys{Gin}{width=0.8\textwidth}
-
-% Effect size for HPH BM is the maximum of 0 and $\min(2\beta_{g2}+\beta_{g4}, 2\beta_{g3}+\beta_{g4})/\sqrt{\gamma_g}$. 
-
-\begin{center}
-\includegraphics{fig-volcano}
-\end{center}
 \end{frame}
 
 
