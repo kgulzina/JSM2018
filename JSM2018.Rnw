@@ -90,9 +90,9 @@ Major Professor: Dr. Jarad Niemi
 {\small
 Computer models
 \begin{itemize}
-\item Implementation of complex mathematical models used to study many areas of scientific research (Sacks et al., 1989).
-\item Process of running large computer codes with various inputs to learn the output of dynamic real systems.
-\item They produce outputs that are functions of time as well as they require time-indexed inputs (Morris, 2014).
+\item Implementation of complex mathematical models used to study many areas of scientific research (Sacks et al., 1989)
+\item Process of running large computer codes with various inputs to learn the output of dynamic real systems
+\item Produce outputs that are functions of time as well as they require time-indexed inputs (Morris, 2014)
 \end{itemize}
 
 \vspace{0.1in} \pause
@@ -100,7 +100,7 @@ Computer models
 Emulators
 \begin{itemize}
 \item ``Meta-model" or ``surrogate" built with less number of inputs
-\item Mimics the computer model and predicts outputs for the new input values
+\item Mimics the computer model
 \end{itemize}
 }
 \end{frame}
@@ -111,13 +111,14 @@ Emulators
 \frametitle{Gaussian Processes (GPs)}
 \setkeys{Gin}{width=0.7\textwidth}
 
+GPs ...
 {\small
 \begin{itemize}
-\item Collection of time- or space- dependent random variables, where any finite collection of such random variables gives the multivariate normal distribution
-\item GPs provide an alternative approach to regression and classifcation problems. Derives distribution over all functions $f(x)$, which are consistent wih observed data
-\item GPs employ Bayesian approach as we set prior distribution for functions,  update it with the observed data and get the posterior distribution over functions
-\item Stationarity, smoothness and other aspects of GPs are controlled by tuning parameters in the covariance function $k(x,x')$
-\item GPs by their structure are one of the suitable models for time- or space- varying functional input computer models
+\item Provide an alternative approach to regression and classification problems
+\item Derive distribution over all functions $f(x)$, which are consistent wih observed data
+\item Employ Bayesian approach
+\item Non-parametric and flexible
+\item Are one of the suitable models for time- or space- varying functional input computer models
 \end{itemize}
 }
 \end{frame}
@@ -243,9 +244,9 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \frametitle{Reading information on soil loss from *.env output file}
 \setkeys{Gin}{width=0.7\textwidth}
 
-\begin{figure}[!tbp]
-  \centering
-  \subfloat[Anuual soil loss distribution for two random hillslopes]{\includegraphics{soil_loss.pdf}\label{fig:f1}}
+\begin{figure}[h!]
+  \includegraphics{soil_loss.pdf}
+  \caption{Anuual soil loss distribution for two random hillslopes.}
 \end{figure}
 
 \end{frame}
@@ -255,9 +256,10 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \begin{frame}
 \frametitle{Reading information on soil loss from *.env output file}
 \setkeys{Gin}{width=0.7\textwidth}
-\begin{figure}[!tbp]
-  \centering
-  \subfloat[Annual soil loss distribution for all 36 hillslopes in 12 years]{\includegraphics{soil_loss_all.pdf}\label{fig:f2}}
+
+\begin{figure}[h!]
+  \includegraphics{soil_loss_all.pdf}
+  \caption{Annual soil loss distribution for all 36 hillslopes in 12 years.}
 \end{figure}
 
 \end{frame}
@@ -341,7 +343,7 @@ $$y = \{y_1, y_2, ..., y_n\} \sim N_n(0, \Sigma)$$ for $x_i \in \mathbb{R}^D$, w
 
 \vspace{0.1in} \pause
 
-\textit{Ridge penalty}: by adding \textit{nugget} parameter - $\lambda$ to the principal diagonal of $\Sigma$, we regularize the covariance matrix
+\textit{Ridge penalty}: by adding \textit{nugget} parameter $\lambda$ to the principal diagonal of $\Sigma$, we regularize the covariance matrix
 $$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into $$\theta = (\alpha_{1,0}, \alpha_{1,1}, \beta_{1,1}, ..., \alpha_{D^\ast,0}, \alpha_{D^\ast,1}, \beta_{D^\ast,1}, \lambda)$$
 }
 \end{frame}
@@ -361,7 +363,17 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into 
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-
+\begin{enumerate}
+\item Simulate $x_i \sim N_T(0, \Omega)$ for $i=1,...,n$
+\begin{itemize}
+\item $\Omega$ has AR(1) structure with unit variance $\sigma = 1$ and $\rho = 0.99$
+\end{itemize}
+\item Generate basis $e_0, s_1, c_1$ for $\omega$
+\item Simulate each $\alpha_0, \alpha_1, \beta_1 \sim$ $Uniform(-30,30)$
+\item Simulate $\lambda \sim$ $Uniform(0, 0.01)$
+\item Calculate covariance matrix $\Sigma$
+\item Simulate $y = (y_1, y_2, ..., y_n) \sim$ $N_n(0, \Sigma)$
+\end{enumerate}
 }
 \end{frame}
 
@@ -372,43 +384,60 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into 
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Analysis? which model?
+For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\theta}_{MLE} = (-29.75041863,  -2.21265674,   2.60807170,   0.03704142)$$
 }
+
+\begin{figure}[h!]
+  \includegraphics{Rplot.pdf}
+  \caption{Distribution of the simulated and emulated response variable $y$ for the first 50 simulated $x$ values.}
+\end{figure}
 \end{frame}
 
 
 % slide 3
-\subsection{Analysis on the WEPP generated data}
 \begin{frame}
-\frametitle{Gaussian process model with scalar inputs}
+\frametitle{Gaussian process model with scalar and functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
 
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Soil loss distribution with respect to the total annual precipitation for Basswood1 hill1 slope profile. Data is taken from the WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{bwd_sf_mixed.pdf}\label{fig:f1}}
+  \hfill
+  \subfloat[Soil loss distribution with respect to the total annual precipitation for Orbweaver2 hill3 slope profile. Output values are generated by the GP emulator.]{\includegraphics[width=0.4\textwidth]{orb_sf_mixed.pdf}\label{fig:f2}}
+\end{figure}
+
 {\small
-description and pictures
+\begin{itemize}
+\item $x_{i,1}$ = annual total precipitation amount
+\item $x_{i,2}$ = slope profile
+\item $\hat{\theta}_{MLE} = (55.06167167, -402.44309188,  -12.67886639,  386.78739175, 0.00197348)$
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 4
 \begin{frame}
-\frametitle{Gaussian process model with scalar and functional inputs}
-\setkeys{Gin}{width=0.7\textwidth}
-
-{\small
-description and pictures 
-}
-\end{frame}
-
-
-% slide 5
-\begin{frame}
 \frametitle{Gaussian process model with functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
 
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Soil loss distribution for all 36 slope profiles in the year 2007.]{\includegraphics[width=0.4\textwidth]{ff_2007.pdf}\label{fig:f1}}
+  \hfill
+  \subfloat[Soil loss distribution for all 36 slope profiles in the year 2018.]{\includegraphics[width=0.4\textwidth]{ff_2018.pdf}\label{fig:f2}}
+  \caption{Plots compare soil loss from WEPP simulation analysis and soil loss emulated by GP model. The difference between $y$ and $\tilde{y}$ is displayed near each point.}
+\end{figure}
+
 {\small
-description and pictures
+\begin{itemize}
+\item $x_{i,1}$ = daily precipitation amount
+\item $x_{i,2}$ = slope profile
+\item $\hat{\theta}_{MLE} = (-2.301884e+02, -1.784269e+02,  1.942628e+02, -2.156876e+02,$$ $$1.757213e+02, -5.919064e+01,  6.395477e-04)$
+\end{itemize}
 }
 \end{frame}
+
 
 
 
@@ -424,57 +453,78 @@ description and pictures
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-how? did we expect?
+Expected result:
 }
+
+\begin{figure}[h!]
+  \includegraphics{Rplot.pdf}
+  \caption{Distribution of the simulated and emulated response variable $y$ for the first 50 simulated $x$ values.}
+\end{figure}
 \end{frame}
 
 
 % slide 2
 \begin{frame}
-\frametitle{Gaussian process model with scalar inputs}
+\frametitle{Gaussian process model with scalar and functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-Analysis? which model?
+\begin{itemize}
+\item WEPP simulated values $y$ fall within  confidence interval in GP model with scalar and functional inputs
+\item Both models smoothed out spikes we saw in WEPP simulated data
+\item GP with functional inputs had the smallest residue variance
+\item GP with functional input had the largest computation time
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 3
 \begin{frame}
-\frametitle{Gaussian process model with scalar and functional inputs}
+\frametitle{Gaussian process model with scalar inputs}
 \setkeys{Gin}{width=0.7\textwidth}
 
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Data is taken from WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{heat_wepp_s.pdf}\label{fig:f1}}
+  \hfill
+  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Output values are generated by GP emulator designed by first approach model.]{\includegraphics[width=0.4\textwidth]{heat_emulator_s.pdf}\label{fig:f2}}
+\end{figure}
+
 {\small
-Analysis? which model?
+\begin{itemize}
+\item $x_{i,1}$ = annual total precipitation amount
+\item $x_{i,2}$ = average slope
+\item $\hat{\theta}_{MLE} = (0.529489806, 0.123338935, 0.003394897)$
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 4
-\begin{frame}
-\frametitle{Gaussian process model with functional inputs}
-\setkeys{Gin}{width=0.7\textwidth}
-
-{\small
-Analysis? which model?
-}
-\end{frame}
-
-
-% slide 5
 \subsection{Next steps}
 \begin{frame}
 \frametitle{Sophisticating the GP emulator}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-how? did we expect?
+Add ...
+\begin{itemize}
+\item More functional input values
+\item Categorical variables to $\mu(x)$
+\item Gradient function to \textit{optim}
+\end{itemize}
+
+Replace ...
+\begin{itemize}
+\item Initial values
+\item Inversion of $\Sigma^{-1}$ with less costly procedure
+\end{itemize}
 }
 \end{frame}
 
 
-% slide 6
+% slide 5
 \begin{frame}
 \frametitle{GP emulator for APSIM}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -520,7 +570,7 @@ Any Questions?
 
 % references
 \begin{frame}
-\frametitle{References}
+\frametitle{References - will change it}
 \setkeys{Gin}{width=0.7\textwidth}
 {\footnotesize
 \begin{itemize}
@@ -530,87 +580,5 @@ Any Questions?
 \end{itemize}
 }
 \end{frame}
-
-
-
-
-
-\begin{frame}
-\frametitle{Constructing a Gibbs sampler}
-
-Conditional independence within a step:
-\[ \begin{array}{rl}
-p(\varepsilon|\ldots) &\propto \prod_{g=1}^G \prod_{n=1}^N Po\left(y_{gn}\left|e^{h_n+\varepsilon_{gn}+x_n'\beta_g}\right.\right)N(\varepsilon_{gn}|0,\gamma_g) \\
-p(\gamma|\ldots) &\propto \prod_{g=1}^G \prod_{n=1}^N N(\varepsilon_{gn}|0,\gamma_g) IG(\gamma_g|\nu/2,\nu\tau/2) \\
-p(\beta_{\ell}|\ldots) &\propto \prod_{g=1}^G \prod_{n=1}^N Po\left(y_{gn}\left|e^{h_n+\varepsilon_{gn}+x_n'\beta_g}\right.\right)N(\beta_{g\ell}|\theta_\ell, \sigma_\ell^2) 
-\end{array} \]
-
-\vspace{0.1in} \pause
-
-Sufficient ``statistics'':
-\[ \begin{array}{rl@{\qquad}rl}
-p(\tau|\ldots) &\sim Ga(\tau|a',b') & (a',b') &= f_{\tau}(\gamma,\nu,a,b) \\
-p(\nu|\ldots) &\sim p(\nu|d')\mathrm{I}(0<\nu<d) & d' &= f_\nu(\gamma,\tau,d) \\
-p(\theta_\ell|\ldots) &\sim N(\theta_\ell|m'_\ell, C'_\ell) & (m'_\ell,C'_\ell) &= f_{\theta_\ell}(\beta_\ell,\sigma_\ell,c_\ell^2) \\
-p(\sigma_\ell^2|\ldots) &\sim IG(e',f') \mathrm{I}(0<\sigma_\ell^2<s^2_\ell) & (e',f') &= f_{\sigma_\ell}(\beta_\ell,\theta_{\ell})
-\end{array} \]
-where all functions can be written as sums over $G$ terms in order to calculate
-means, variances, etc.
-\end{frame}
-
-
-\subsection{GPUs}
-
-
-\begin{frame}
-\frametitle{Parallelization translated to a GPU}
-
-If there are $G$ nodes, then 
-\begin{itemize}
-\item Conditional independence $\to$ embarrassingly parallel - possible speedup is $G$ \pause
-\item Calculate sufficient ``statistics'' $\to$ parallel reduction - possible speedup is $[G-1]/\log_2(G)$
-\end{itemize}
-
-\vspace{0.1in}
-
-\begin{center}
-\includegraphics[width=0.6\textwidth]{parallel_reduction}
-
-{\tiny (\url{https://scs.senecac.on.ca/~gpu610/pages/images/parallel_reduction.png})}
-\end{center}
-\end{frame}
-
-
-
-
-
-\begin{frame}[fragile]
-\frametitle{Implementation}
-The computation for this hierarchical overdispersed count regression model is provided in the following three R packages at \url{https://github.com/wlandau/}:
-
-\begin{itemize}
-\item {\tt fbseq}: user interface 
-\item {\tt fbseqOpenMP}: multithreaded backend
-\item {\tt fbseqCUDA}: NVIDIA GPU backend
-\end{itemize}
-
-\pause
-
-<<setup,size="tiny", cache=TRUE>>=
-library(fbseq)
-data(paschold) # Paschold et. al. (2012) data
-
-paschold@contrasts[[5]]
-paschold@contrasts[[6]]
-paschold@propositions$`high-parent_B73xMo17`
-@
-
-<<dependson="setup",eval=FALSE, size="tiny">>=
-configs    = Configs(burnin = 10, iterations = 10, thin = 1) 
-chain      = Chain(paschold, configs) 
-chain_list = fbseq(chain, backend = "CUDA")
-@
-\end{frame}
-
 
 \end{document}
