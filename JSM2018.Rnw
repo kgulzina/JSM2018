@@ -8,7 +8,13 @@
 \setlength{\unitlength}{\textwidth}  % measure in textwidths
 \usepackage[normalem]{ulem}
 \usepackage{graphicx}
-\usepackage{subfig}
+\usepackage{subfig, accents, calc, amsthm, amsmath, amssymb, amsbsy}
+
+
+% to add double tilde
+\newcommand{\dbtilde}[1]{\accentset{\approx}{#1}}
+\newcommand{\vardbtilde}[1]{\tilde{\raisebox{0pt}[0.85\height]{$\tilde{#1}$}}}
+
 
 % to avoid counting all pages
 \newcommand{\backupbegin}{
@@ -272,9 +278,15 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 
 {\small
 \begin{itemize}
-\item 
+\item \textit{Definition}: Collection of random variables, any finite number of which have a Gaussian distribution
+$$f \sim GP_x(\mu, k)$$ denote $f$ is a GP with input space $x$ s.t. for some $i,j \leq n$ we have
+\begin{itemize}
+\item for some mean function $\mu(x)$: $$E[f(x_i)] = \mu(x_i)$$
+\item for some covariance function $k(x,x')$: $$Cov(f(x_i), f(x_j)) = k(x_i, x_j)$$
+\item Using k(x,x') we build a covariance matrix $\Sigma$ s.t. for some $i,j \leq n$ $$\Sigma_{i,j} = k(x_i, x_j)$$
 \end{itemize}
-GP's explained: definition, covariance functions, bayesian, priors
+\item Thus, for any collection $y = \{y_1, y_2, ..., y_n\}$ s.t. $f(x_i) = y_i$, by definition, we have $$y \sim N_n(\mu, \Sigma)$$
+\end{itemize}
 }
 \end{frame}
 
@@ -285,18 +297,31 @@ GP's explained: definition, covariance functions, bayesian, priors
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-regulzarization? penalty? marginalization?
+For the inference about new output value $\tilde{y}$ given the new input value $\tilde{x}$, we have
+\begin{itemize}
+\item Bayesian approach: derive posterior joint distribution of $\tilde{y}$ and $y$ given prior distribution $y \sim N_n(\mu, \Sigma)$ and observed data: $$\begin{pmatrix} y \\ \tilde{y} \end{pmatrix} \sim N\begin{pmatrix} 0, & \begin{pmatrix} \Sigma & \widetilde{\Sigma} \\ \widetilde{\Sigma}^T & \dbtilde{\Sigma} \end{pmatrix} \end{pmatrix}$$
+\item Predicition: conditional distribution of $\tilde{y}$ on the prior and observed data:  $$\tilde{y}|\tilde{x},x,y \sim N(\widetilde{\Sigma}^T\Sigma^{-1}y, \dbtilde{\Sigma} - \widetilde{\Sigma}^T\Sigma^{-1}\widetilde{\Sigma})$$
+\item Empirical Bayes: get the MLE estimates of hyperparameters in covariance function using observed data
+\end{itemize}
 }
 \end{frame}
 
 
 % slide 3
+\subsection{Gaussian processes with functional inputs}
 \begin{frame}
-\frametitle{Gaussian process with functional inputs}
+\frametitle{Weight parameters built on trigonometric basis functions}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-trigonometric basis? 
+\begin{itemize}
+\item \textit{Correlation distance}: for some $i,j \leq n$ and $x_i, x_j \in \mathbb{R}^T$ we have $$d(x_i, x_j) = \omega(x_i-x_j)^\alpha$$
+\item \textit{Weight parameter}: $\omega \mathbb{R}^T$ s.t. $\omega_t \in \mathbb{R}^+$
+\begin{itemize}
+\item From WEPP, $\omega$ has periodic, wiggly structure
+\item Remedy for the "curse of dimensionality" when $T >> n$: $$\omega = \alpha_0 e_0 + \sum_{q=1}^{T/2-1}(\alpha_qc_q+\beta_qs_q) + \alpha_{T/2}c_{T/2}$$ $$e_0 = (1,1, ... ,1)'$$ $$...$$ $$c_q = (\cos w_q, \cos 2w_q, ... , \cos Tw_q)'$$ $$s_q = (\sin w_q, \sin 2w_q, ... , \sin Tw_q)'$$ where $q$ is the number of harmonics
+\end{itemize}
+\end{itemize}
 }
 \end{frame}
 
@@ -307,9 +332,23 @@ trigonometric basis?
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-write three final approaches 
+By setting $\alpha = 2$ i.e \textit{Squared-exponential} covariance function, $\mu(x) = 0$ and $q = 1$ we have the following generalized model: 
+$$y = \{y_1, y_2, ..., y_n\} \sim N_n(0, \Sigma)$$ for $x_i \in \mathbb{R}^D$, where $x_i = (x_{i,1}, x_{i,2}, ..., x_{i,D^{\ast}})$ and $x_{i,d} \in \mathbb{R}^{T_d}$ s.t. $1 \leq T_d \leq D$ and $\sum_{d = 1}^{D^\ast}T_d = D$
+\begin{itemize}
+\item Corresponding $\omega = (\omega_1, \omega_2, ..., \omega_D^\ast)$ has the same structure with $\omega_d \in \mathbb{R}^{T_d}$
+\item If $T_d = 1$ input $x_{i,d}$ is scalar and functional for $T_d > 1$
+\end{itemize}
+
+\vspace{0.1in} \pause
+
+\textit{Ridge penalty}: by adding \textit{nugget} parameter - $\lambda$ to the principal diagonal of $\Sigma$, we regularize the covariance matrix
+$$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into $$\theta = (\alpha_{1,0}, \alpha_{1,1}, \beta_{1,1}, ..., \alpha_{D^\ast,0}, \alpha_{D^\ast,1}, \beta_{D^\ast,1}, \lambda)$$
 }
 \end{frame}
+
+
+
+
 
 
 % chapter: Analysis
@@ -322,7 +361,7 @@ write three final approaches
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-how did you simulate data?
+
 }
 \end{frame}
 
@@ -490,26 +529,6 @@ Any Questions?
 \item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
 \end{itemize}
 }
-\end{frame}
-
-
-
-
-\subsection{Fully Bayes}
-\begin{frame}
-\frametitle{Priors}
-
-All priors are constructed to be vague, proper, and (if possible) conditionally conjugate. \pause 
-There are $2(L+1)$ hyperparameters and we assign the following priors
-\[ \begin{array}{rll}
-\tau &\sim Ga(a,b) & \mbox{conditionally conjugate} \\
-\nu &\sim Unif(0,d) \\
-\theta_\ell &\ind N(0,c_\ell^2) & \mbox{conditionally conjugate} \\
-\sigma_\ell &\ind Unif(0,s_\ell) &
-\end{array} \]
-\pause
-As we'll see, posterior distributions for these parameters are extremely tight relative to their priors. 
-
 \end{frame}
 
 
