@@ -320,23 +320,41 @@ For the inference about $\tilde{y}$ given the new input value $\tilde{x}$, we ha
 % slide 13
 \subsection{GP emulator}
 \begin{frame}
-\frametitle{Weight parameters built on trigonometric basis functions}
+\frametitle{More on covariance function $k(\cdot,\cdot)$}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
 \begin{itemize}
-\item \textit{Correlation distance}: for some $i,j \leq n$ and $x_i, x_j \in \mathbb{R}^T$ we have $$d(x_i, x_j) = \omega(x_i-x_j)^\alpha$$
-\item \textit{Weight parameter}: $\omega \in \mathbb{R}^T$ s.t. $\omega_t \in \mathbb{R}^+$
-\begin{itemize}
-\item From WEPP, $\omega$ has periodic, wiggly structure
-\item Remedy for the "curse of dimensionality" when $T >> n$: $$\omega = \alpha_0 e_0 + \sum_{q=1}^{T/2-1}(\alpha_qc_q+\beta_qs_q) + \alpha_{T/2}c_{T/2}$$ $$e_0 = (1,1, ... ,1)'$$ $$...$$ $$c_q = (\cos w_q, \cos 2w_q, ... , \cos Tw_q)'$$ $$s_q = (\sin w_q, \sin 2w_q, ... , \sin Tw_q)'$$ where $q$ is the number of harmonics
-\end{itemize}
+\item \textit{Correlation distance}: for some $i,j \leq n$ and $x_i, x_j \in \mathbb{R}^T$ we have $$d(x_i, x_j) = \omega^\top(x_i-x_j)^\alpha$$
+\item \textit{Nearness} property
+\item \textit{Non-negative defineteness} property
+\item Others aspects: \textit{stationarity, isotropy, smoothness and periodicity}
+\item If $\alpha = 2$, $$k(x_i, x_j) = e^{-\omega^\top(x_i-x_j)^2}$$ where weight parameter: $\omega \propto \frac{1}{l}$ and $l$ is characteristic length-scale of GP
 \end{itemize}
 }
 \end{frame}
 
 
 % slide 14
+\begin{frame}
+\frametitle{Weight parameters built on trigonometric basis functions}
+\setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+\textit{Weight parameter}: $\omega \in \mathbb{R}^T$ s.t. $\omega_t \in \mathbb{R}^+$
+\begin{itemize}
+\item $\omega$ has periodic, wiggly structure
+\begin{itemize}
+\item Inputs: $x_i \in$ \{daily precipitation, slope profile\}
+\item Effect of the input should be similar when it is close in the input space
+\end{itemize}
+\item Remedy for the "curse of dimensionality" when $T >> n$: $$\omega = \alpha_0 e_0 + \sum_{q=1}^{T/2-1}(\alpha_qc_q+\beta_qs_q) + \alpha_{T/2}c_{T/2}$$ $$e_0 = (1,1, ... ,1)'$$ $$...$$ $$c_q = (\cos w_q, \cos 2w_q, ... , \cos Tw_q)'$$ $$s_q = (\sin w_q, \sin 2w_q, ... , \sin Tw_q)'$$ where $q$ is the number of harmonics
+\end{itemize}
+}
+\end{frame}
+
+
+% slide 15
 \begin{frame}
 \frametitle{Gaussian process emulator}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -364,7 +382,7 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_{D^\ast}, \lambda)$$ transformed int
 % chapter: Analysis
 \section{Analysis}
 
-% slide 15
+% slide 16
 \subsection{Simulation study}
 \begin{frame}
 \frametitle{Simulating data}
@@ -386,7 +404,7 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_{D^\ast}, \lambda)$$ transformed int
 \end{frame}
 
 
-% slide 16
+% slide 17
 \begin{frame}
 \frametitle{Analysis on simulated data}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -403,7 +421,7 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 
 
 
-% slide 17
+% slide 18
 \subsection{Analysis on WEPP generated data}
 \begin{frame}
 \frametitle{Gaussian process model with scalar inputs}
@@ -428,7 +446,7 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 
 
 
-% slide 18
+% slide 19
 \begin{frame}
 \frametitle{Gaussian process model with scalar and functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -451,7 +469,7 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 \end{frame}
 
 
-% slide 19
+% slide 20
 \begin{frame}
 \frametitle{Gaussian process model with functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -483,7 +501,7 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 \section{Discussion}
 
 \subsection{Model performance}
-% slide 20
+% slide 21
 \begin{frame}
 \frametitle{Conclusions}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -500,7 +518,7 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 \end{frame}
 
 
-% slide 21
+% slide 22
 \subsection{Next steps}
 \begin{frame}
 \frametitle{Sophisticating the GP emulator}
@@ -523,7 +541,7 @@ Replace ...
 \end{frame}
 
 
-% slide 22
+% slide 23
 \begin{frame}
 \frametitle{GP emulator for APSIM}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -541,7 +559,8 @@ Replace ...
 
 
 
-% thanks slide 23, Q&A
+% thanks slide 24, Q&A
+\subsection{}
 \begin{frame}
 \frametitle{Acknowledgements}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -567,15 +586,14 @@ Any Questions?
 
 
 
-% references slide 24
+% references slide 25
 \begin{frame}
-\frametitle{References - will change it}
+\frametitle{References}
 \setkeys{Gin}{width=0.7\textwidth}
 {\footnotesize
 \begin{itemize}
-\item Jarad Niemi, Eric Mittman, Will Landau, and Dan Nettleton. (2015) ``Empirical Bayes analysis of RNA-seq data for detection of gene expression heterosis.’’ Journal of Agricultural, Biological, and Environmental Statistcs, 20(4): 614-628
-\item Will Landau and Jarad Niemi. ``A fully Bayesian strategy for high-dimensional hierarchical modeling using massively parallel computing.'' \url{https://arxiv.org/abs/1606.06659}
-\item Will Landau, Jarad Niemi, and Dan Nettleton. ``Fully Bayesian analysis of RNA-seq counts for the detection of gene expression heterosis.'' \emph{Journal of the American Statistical Association} (in press)
+\item Sacks, J., Welch, W. J., Mitchell, T. J., \& Wynn, H. P. (1989). Design and analysis of computer experiments. Statistical science, 409-423.
+\item Morris, M. D. (2014). Maximin distance optimal designs for computer experiments with time-varying inputs and outputs. Journal of statistical Planning and Inference, 144, 63-68.
 \end{itemize}
 }
 \end{frame}
