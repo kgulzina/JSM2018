@@ -9,6 +9,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{graphicx}
 \usepackage{subfig, accents, calc, amsthm, amsmath, amssymb, amsbsy}
+\usefonttheme[onlymath]{serif}
 
 
 % to add double tilde
@@ -36,7 +37,7 @@
 \providecommand{\ov}[1]{\overline{#1}}
 
 
-% title slide
+% title slide 1
 \institute[ISU]{Department of Statistics\\Iowa State University}
 \date{July 16, 2019}
 
@@ -48,31 +49,32 @@
 \begin{frame}
 \maketitle
 
-{\small
-Major Professor: Dr. Jarad Niemi
-}
+% needed later for conference
+%{\small
+%Major Professor: Dr. Jarad Niemi
+%}
 
 \vspace{0.2in}
 \end{frame}
 
 
 % outline slide
-\begin{frame}
-\frametitle{Outline}
-\setkeys{Gin}{width=0.7\textwidth}
+%\begin{frame}
+%\frametitle{Outline}
+%\setkeys{Gin}{width=0.7\textwidth}
 
-{\small
-\begin{itemize}
-\item Introduction
-\item Data
-\item Methods
-\item Analysis
-\item Discussion
-\item Q\&A
-\end{itemize}
-}
+%{\small
+%\begin{itemize}
+%\item Introduction
+%\item Data
+%\item Methods
+%\item Analysis
+%\item Discussion
+%\item Q\&A
+%\end{itemize}
+%}
 
-\end{frame}
+%\end{frame}
 
 
 
@@ -82,7 +84,7 @@ Major Professor: Dr. Jarad Niemi
 % chapter: Introduction
 \section{Introduction}
 
-% slide 1
+% slide 2
 \begin{frame}
 \frametitle{Concepts of computer models and emulators}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -106,7 +108,7 @@ Emulators
 \end{frame}
 
 
-% slide 2
+% slide 3
 \begin{frame}
 \frametitle{Gaussian Processes (GPs)}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -114,8 +116,8 @@ Emulators
 GPs ...
 {\small
 \begin{itemize}
-\item Provide an alternative approach to regression and classification problems
-\item Derive distribution over all functions $f(x)$, which are consistent wih observed data
+\item Provide an approach to regression and classification problems
+\item Derive distribution over all functions which are consistent wih observed data
 \item Employ Bayesian approach
 \item Non-parametric and flexible
 \item Are one of the suitable models for time- or space- varying functional input computer models
@@ -129,46 +131,51 @@ GPs ...
 
 
 % chapter: Data
-\section{Data}
+\section{WEPP computer model}
 
-% slide 1
+% slide 4
 \begin{frame}
-\frametitle{WEPP computer model}
+\frametitle{Water Erosion Prediction Project (WEPP) computer model}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
 \begin{itemize}
 \item Soil erosion and runoff prediction technology used by the United States Department of Agriculture (USDA)
-\item Process-orinted, computer implemented, continuous simulation program
+\item Process-oriented, computer implemented, continuous simulation program
 \item Requires various input files $\{climate, management, soil, slope\}$
 \end{itemize}
 }
 
 \begin{center}
-\includegraphics[scale = 0.7]{wepp.jpg}
+\includegraphics[scale = 0.6, height = 50mm]{wepp.jpg}
 \end{center}
-%{\fontsize{2.5}{4}\selectfont (\url{https://scs.senecac.on.ca/~gpu610/pages/images/parallel_reduction.png})}
+
+{\fontsize{2.5}{4}\selectfont (\url{https://www.ars.usda.gov/ARSUserFiles/50201000/WEPP/usersum.pdf})}
 \end{frame}
 
 
-% slide 2
+% slide 5
 \subsection{WEPP simulation analysis}
 \begin{frame}
-\frametitle{WEPP simulation analysis}
+\frametitle{STRIPS-1 Project}
 \setkeys{Gin}{width=0.7\textwidth}
+
+{\tiny
+Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watersheds for years 2007 to 2018 at Neal Smith National Wildlife Refuge (NSNWR)
+}
 
 \begin{center}
 \includegraphics[scale = 0.1, width = 60mm]{strips.png}
 \end{center}
 
-{\small
-Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watersheds at Neal Smith National Wildlife Refuge (NSNWR)
-}
+% include citation
+{\fontsize{2.5}{4}\selectfont (\url{https://www.researchgate.net/profile/Rick_Cruse/publication/271738305/figure/download/fig1/AS:353728415715328@1461346834749/Location-of-experimental-watersheds-at-the-NSNWR-and-experimental-treatments-One-of-four.png?_sg=ZkO0rVMEFQUs--imM8KJC_18rv5R8vCXIaX4jnTwdac80aVb8gu16gygd8rV8Gs_YOZhEH_lxNM, https://www.researchgate.net/figure/Location-of-experimental-watersheds-at-the-NSNWR-and-experimental-treatments-One-of-four_fig1_271738305})}
+
 
 \end{frame}
 
 
-% slide 3
+% slide 6
 \begin{frame}
 \frametitle{Input files: Climate and Management}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -187,7 +194,7 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \end{frame}
 
 
-% slide 4
+% slide 7
 \begin{frame}
 \frametitle{Input files: Slope and Soil}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -197,6 +204,7 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \item Both files are individual for each specific hillslope
 \item Soil information is retrieved from SSURGO database by USDA-NRCS
 \item Soil texture is allocated in 12 watersheds by \textit{(long, lat)} coordinates provided in data files
+\item There are in total 8 soil texture types at STRIPS-1 Project sites
 \begin{table}[h!]
   \begin{center}
     \label{tab:table1}
@@ -219,7 +227,7 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \end{frame}
 
 
-% slide 5
+% slide 8
 \begin{frame}
 \frametitle{Input files: Slope and Soil}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -227,7 +235,7 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 {\small
 \begin{itemize}
 \item Slope is measured for every 5 meters of hillslope length. Lengths range from 5.98 to 125.60 meters
-\item ``Face''/``gulley'': Slope profile is depicted from ``face'' transect
+\item Slope profile is depicted from ``face'' transect
 \begin{figure}[!tbp]
   \centering
   \subfloat[Slope profile of the hillslope 1 in Basswood1 watershed.]{\includegraphics[width=0.4\textwidth]{bsw_slope.pdf}\label{fig:f1}}
@@ -239,9 +247,9 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \end{frame}
 
 
-% slide 6
+% slide 9
 \begin{frame}
-\frametitle{Reading information on soil loss from *.env output file}
+\frametitle{Output}
 \setkeys{Gin}{width=0.7\textwidth}
 
 \begin{figure}[h!]
@@ -252,9 +260,9 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 \end{frame}
 
 
-% slide 7
+% slide 10
 \begin{frame}
-\frametitle{Reading information on soil loss from *.env output file}
+\frametitle{Output}
 \setkeys{Gin}{width=0.7\textwidth}
 
 \begin{figure}[h!]
@@ -270,9 +278,9 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 
 
 % chapter: Methods
-\section{Methods}
+\section{GPs with functional inputs}
 
-% slide 1
+% slide 11
 \subsection{Gaussian Processes}
 \begin{frame}
 \frametitle{Gaussian process model}
@@ -281,36 +289,36 @@ Run WEPP separate for each hillslope, in total for 36 hillslopes in 12 watershed
 {\small
 \begin{itemize}
 \item \textit{Definition}: Collection of random variables, any finite number of which have a Gaussian distribution
-$$f \sim GP_x(\mu, k)$$ denote $f$ is a GP with input space $x$ s.t. for some $i,j \leq n$ we have
+$$f \sim GP_x(\mu, k)$$ denote $f$ is a GP with input space $x$ s.t. for some $i,j \leq n$ and $x_i, x_j \in \mathbb{R}^T$, we have
 \begin{itemize}
-\item for some mean function $\mu(x)$: $$E[f(x_i)] = \mu(x_i)$$
-\item for some covariance function $k(x,x')$: $$Cov(f(x_i), f(x_j)) = k(x_i, x_j)$$
+\item for some mean function $\mu$: $$E[f(x_i)] = \mu(x_i)$$
+\item for some covariance function $k$: $$Cov(f(x_i), f(x_j)) = k(x_i, x_j)$$
 \item Using k(x,x') we build a covariance matrix $\Sigma$ s.t. for some $i,j \leq n$ $$\Sigma_{i,j} = k(x_i, x_j)$$
 \end{itemize}
-\item Thus, for any collection $y = \{y_1, y_2, ..., y_n\}$ s.t. $f(x_i) = y_i$, by definition, we have $$y \sim N_n(\mu, \Sigma)$$
+\item Thus, for any collection of vectors $\{x_1, x_2, ..., x_n\}$ s.t. $f(x_i) = y_i$, by definition, we have $$y \sim N_n(\mu, \Sigma)$$
 \end{itemize}
 }
 \end{frame}
 
 
-% slide 2
+% slide 12
 \begin{frame}
 \frametitle{Properties of Gaussian process}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-For the inference about new output value $\tilde{y}$ given the new input value $\tilde{x}$, we have
+For the inference about $\tilde{y}$ given the new input value $\tilde{x}$, we have
 \begin{itemize}
-\item Bayesian approach: derive posterior joint distribution of $\tilde{y}$ and $y$ given prior distribution $y \sim N_n(\mu, \Sigma)$ and observed data: $$\begin{pmatrix} y \\ \tilde{y} \end{pmatrix} \sim N\begin{pmatrix} 0, & \begin{pmatrix} \Sigma & \widetilde{\Sigma} \\ \widetilde{\Sigma}^T & \dbtilde{\Sigma} \end{pmatrix} \end{pmatrix}$$
-\item Predicition: conditional distribution of $\tilde{y}$ on the prior and observed data:  $$\tilde{y}|\tilde{x},x,y \sim N(\widetilde{\Sigma}^T\Sigma^{-1}y, \dbtilde{\Sigma} - \widetilde{\Sigma}^T\Sigma^{-1}\widetilde{\Sigma})$$
-\item Empirical Bayes: get the MLE estimates of hyperparameters in covariance function using observed data
+\item \textit{Bayesian approach}: derive posterior joint distribution of $\tilde{y}$ and $y$ given prior distribution $y \sim N_n(0, \Sigma)$ and observed data: $$\begin{pmatrix} y \\ \tilde{y} \end{pmatrix} \sim N\begin{pmatrix} 0, & \begin{pmatrix} \Sigma & \widetilde{\Sigma} \\ \widetilde{\Sigma}^T & \dbtilde{\Sigma} \end{pmatrix} \end{pmatrix}$$
+\item \textit{Prediction}: conditional distribution of $\tilde{y}$ on the prior and observed data:  $$\tilde{y}|\tilde{x},x,y \sim N(\widetilde{\Sigma}^T\Sigma^{-1}y, \dbtilde{\Sigma} - \widetilde{\Sigma}^T\Sigma^{-1}\widetilde{\Sigma})$$
+\item \textit{Empirical Bayes}: get the MLE estimates of hyperparameters  using observed data
 \end{itemize}
 }
 \end{frame}
 
 
-% slide 3
-\subsection{Gaussian processes with functional inputs}
+% slide 13
+\subsection{GP emulator}
 \begin{frame}
 \frametitle{Weight parameters built on trigonometric basis functions}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -318,7 +326,7 @@ For the inference about new output value $\tilde{y}$ given the new input value $
 {\small
 \begin{itemize}
 \item \textit{Correlation distance}: for some $i,j \leq n$ and $x_i, x_j \in \mathbb{R}^T$ we have $$d(x_i, x_j) = \omega(x_i-x_j)^\alpha$$
-\item \textit{Weight parameter}: $\omega \mathbb{R}^T$ s.t. $\omega_t \in \mathbb{R}^+$
+\item \textit{Weight parameter}: $\omega \in \mathbb{R}^T$ s.t. $\omega_t \in \mathbb{R}^+$
 \begin{itemize}
 \item From WEPP, $\omega$ has periodic, wiggly structure
 \item Remedy for the "curse of dimensionality" when $T >> n$: $$\omega = \alpha_0 e_0 + \sum_{q=1}^{T/2-1}(\alpha_qc_q+\beta_qs_q) + \alpha_{T/2}c_{T/2}$$ $$e_0 = (1,1, ... ,1)'$$ $$...$$ $$c_q = (\cos w_q, \cos 2w_q, ... , \cos Tw_q)'$$ $$s_q = (\sin w_q, \sin 2w_q, ... , \sin Tw_q)'$$ where $q$ is the number of harmonics
@@ -328,23 +336,23 @@ For the inference about new output value $\tilde{y}$ given the new input value $
 \end{frame}
 
 
-% slide 4
+% slide 14
 \begin{frame}
 \frametitle{Gaussian process emulator}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
-By setting $\alpha = 2$ i.e \textit{Squared-exponential} covariance function, $\mu(x) = 0$ and $q = 1$ we have the following generalized model: 
-$$y = \{y_1, y_2, ..., y_n\} \sim N_n(0, \Sigma)$$ for $x_i \in \mathbb{R}^D$, where $x_i = (x_{i,1}, x_{i,2}, ..., x_{i,D^{\ast}})$ and $x_{i,d} \in \mathbb{R}^{T_d}$ s.t. $1 \leq T_d \leq D$ and $\sum_{d = 1}^{D^\ast}T_d = D$
+By setting $\alpha = 2$ i.e \textit{Squared-exponential} covariance function, prior $\mu(x) = 0$ and $q = 1$ we have the following generalized model for emulator: 
+$$y = (y_1,\ldots,y_n) \sim N_n(0, \Sigma)$$ for $x_i \in \mathbb{R}^D$, where $x_i = (x_{i,1}, x_{i,2}, ..., x_{i,D^{\ast}})$ and $x_{i,d} \in \mathbb{R}^{T_d}$ s.t. $1 \leq T_d \leq D$ and $\sum_{d = 1}^{D^\ast}T_d = D$
 \begin{itemize}
-\item Corresponding $\omega = (\omega_1, \omega_2, ..., \omega_D^\ast)$ has the same structure with $\omega_d \in \mathbb{R}^{T_d}$
+\item Corresponding $\omega = (\omega_1, \omega_2, ..., \omega_{D^\ast})$ has the same structure with $\omega_d \in \mathbb{R}^{T_d}$
 \item If $T_d = 1$ input $x_{i,d}$ is scalar and functional for $T_d > 1$
 \end{itemize}
 
 \vspace{0.1in} \pause
 
 \textit{Ridge penalty}: by adding \textit{nugget} parameter $\lambda$ to the principal diagonal of $\Sigma$, we regularize the covariance matrix
-$$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into $$\theta = (\alpha_{1,0}, \alpha_{1,1}, \beta_{1,1}, ..., \alpha_{D^\ast,0}, \alpha_{D^\ast,1}, \beta_{D^\ast,1}, \lambda)$$
+$$\theta = (\omega_1, \omega_2, ..., \omega_{D^\ast}, \lambda)$$ transformed into $$\theta = (\alpha_{1,0}, \alpha_{1,1}, \beta_{1,1}, ..., \alpha_{D^\ast,0}, \alpha_{D^\ast,1}, \beta_{D^\ast,1}, \lambda)$$
 }
 \end{frame}
 
@@ -356,7 +364,7 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into 
 % chapter: Analysis
 \section{Analysis}
 
-% slide 1
+% slide 15
 \subsection{Simulation study}
 \begin{frame}
 \frametitle{Simulating data}
@@ -378,7 +386,7 @@ $$\theta = (\omega_1, \omega_2, ..., \omega_D^\ast, \lambda)$$ transformed into 
 \end{frame}
 
 
-% slide 2
+% slide 16
 \begin{frame}
 \frametitle{Analysis on simulated data}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -394,17 +402,36 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 \end{frame}
 
 
-% slide 3
+
+% slide 17
+\subsection{Analysis on WEPP generated data}
 \begin{frame}
-\frametitle{Gaussian process model with scalar and functional inputs}
+\frametitle{Gaussian process model with scalar inputs}
 \setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+\begin{itemize}
+\item $x_{i,1}$ = annual total precipitation amount
+\item $x_{i,2}$ = average slope
+\item $\hat{\theta}_{MLE} = (0.529489806, 0.123338935, 0.003394897)$
+\end{itemize}
+}
 
 \begin{figure}[!tbp]
   \centering
-  \subfloat[Soil loss distribution with respect to the total annual precipitation for Basswood1 hill1 slope profile. Data is taken from the WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{bwd_sf_mixed.pdf}\label{fig:f1}}
+  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Data is taken from WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{heat_wepp_s.pdf}\label{fig:f1}}
   \hfill
-  \subfloat[Soil loss distribution with respect to the total annual precipitation for Orbweaver2 hill3 slope profile. Output values are generated by the GP emulator.]{\includegraphics[width=0.4\textwidth]{orb_sf_mixed.pdf}\label{fig:f2}}
+  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Output values are generated by GP emulator designed by first approach model.]{\includegraphics[width=0.4\textwidth]{heat_emulator_s.pdf}\label{fig:f2}}
 \end{figure}
+
+\end{frame}
+
+
+
+% slide 18
+\begin{frame}
+\frametitle{Gaussian process model with scalar and functional inputs}
+\setkeys{Gin}{width=0.7\textwidth}
 
 {\small
 \begin{itemize}
@@ -413,13 +440,29 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 \item $\hat{\theta}_{MLE} = (55.06167167, -402.44309188,  -12.67886639,  386.78739175, 0.00197348)$
 \end{itemize}
 }
+
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Soil loss distribution with respect to the total annual precipitation for Basswood1 hill1 slope profile. Data is taken from the WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{bwd_sf_mixed.pdf}\label{fig:f1}}
+  \hfill
+  \subfloat[Soil loss distribution with respect to the total annual precipitation for Orbweaver2 hill3 slope profile. Output values are generated by the GP emulator.]{\includegraphics[width=0.4\textwidth]{orb_sf_mixed.pdf}\label{fig:f2}}
+\end{figure}
+
 \end{frame}
 
 
-% slide 4
+% slide 19
 \begin{frame}
 \frametitle{Gaussian process model with functional inputs}
 \setkeys{Gin}{width=0.7\textwidth}
+
+{\small
+\begin{itemize}
+\item $x_{i,1}$ = daily precipitation amount
+\item $x_{i,2}$ = slope profile
+\item $\hat{\theta}_{MLE} = (-2.301884e+02, -1.784269e+02,  1.942628e+02, -2.156876e+02,$$ $$1.757213e+02, -5.919064e+01,  6.395477e-04)$
+\end{itemize}
+}
 
 \begin{figure}[!tbp]
   \centering
@@ -429,13 +472,6 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
   \caption{Plots compare soil loss from WEPP simulation analysis and soil loss emulated by GP model. The difference between $y$ and $\tilde{y}$ is displayed near each point.}
 \end{figure}
 
-{\small
-\begin{itemize}
-\item $x_{i,1}$ = daily precipitation amount
-\item $x_{i,2}$ = slope profile
-\item $\hat{\theta}_{MLE} = (-2.301884e+02, -1.784269e+02,  1.942628e+02, -2.156876e+02,$$ $$1.757213e+02, -5.919064e+01,  6.395477e-04)$
-\end{itemize}
-}
 \end{frame}
 
 
@@ -446,30 +482,15 @@ For simplicity, set $n = 300$ and $D=20$. Applying the GP model gives $$\hat{\th
 % chapter: Discussion
 \section{Discussion}
 
-% slide 1
 \subsection{Model performance}
+% slide 20
 \begin{frame}
-\frametitle{Simulation study}
-\setkeys{Gin}{width=0.7\textwidth}
-
-{\small
-Expected result:
-}
-
-\begin{figure}[h!]
-  \includegraphics{Rplot.pdf}
-  \caption{Distribution of the simulated and emulated response variable $y$ for the first 50 simulated $x$ values.}
-\end{figure}
-\end{frame}
-
-
-% slide 2
-\begin{frame}
-\frametitle{Gaussian process model with scalar and functional inputs}
+\frametitle{Conclusions}
 \setkeys{Gin}{width=0.7\textwidth}
 
 {\small
 \begin{itemize}
+\item Expected results in simulation study
 \item WEPP simulated values $y$ fall within  confidence interval in GP model with scalar and functional inputs
 \item Both models smoothed out spikes we saw in WEPP simulated data
 \item GP with functional inputs had the smallest residue variance
@@ -479,29 +500,7 @@ Expected result:
 \end{frame}
 
 
-% slide 3
-\begin{frame}
-\frametitle{Gaussian process model with scalar inputs}
-\setkeys{Gin}{width=0.7\textwidth}
-
-\begin{figure}[!tbp]
-  \centering
-  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Data is taken from WEPP simulation analysis.]{\includegraphics[width=0.4\textwidth]{heat_wepp_s.pdf}\label{fig:f1}}
-  \hfill
-  \subfloat[Soil loss distribution with respect to the total annual precipitation and average slope of a hillslope. Output values are generated by GP emulator designed by first approach model.]{\includegraphics[width=0.4\textwidth]{heat_emulator_s.pdf}\label{fig:f2}}
-\end{figure}
-
-{\small
-\begin{itemize}
-\item $x_{i,1}$ = annual total precipitation amount
-\item $x_{i,2}$ = average slope
-\item $\hat{\theta}_{MLE} = (0.529489806, 0.123338935, 0.003394897)$
-\end{itemize}
-}
-\end{frame}
-
-
-% slide 4
+% slide 21
 \subsection{Next steps}
 \begin{frame}
 \frametitle{Sophisticating the GP emulator}
@@ -510,9 +509,9 @@ Expected result:
 {\small
 Add ...
 \begin{itemize}
-\item More functional input values
+\item Another input values
 \item Categorical variables to $\mu(x)$
-\item Gradient function to \textit{optim}
+\item Gradient function to \textit{optim()}
 \end{itemize}
 
 Replace ...
@@ -524,7 +523,7 @@ Replace ...
 \end{frame}
 
 
-% slide 5
+% slide 22
 \begin{frame}
 \frametitle{GP emulator for APSIM}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -542,7 +541,7 @@ Replace ...
 
 
 
-% thanks slide, Q&A
+% thanks slide 23, Q&A
 \begin{frame}
 \frametitle{Acknowledgements}
 \setkeys{Gin}{width=0.7\textwidth}
@@ -568,7 +567,7 @@ Any Questions?
 
 
 
-% references
+% references slide 24
 \begin{frame}
 \frametitle{References - will change it}
 \setkeys{Gin}{width=0.7\textwidth}
